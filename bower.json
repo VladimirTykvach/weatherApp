@@ -1,0 +1,28 @@
+{
+  "name": "WeatherApp",
+  "authors": [
+    "Vladimir Tykvach <tykvach@gmail.com>"
+  ],
+  "description": "This is test weather app",
+  "main": "app/index.html",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.1",
+    "bootstrap": "^3.3.6",
+    "angular-mocks": "^1.5.1",
+    "angular-route": "^1.5.1",
+    "angular-resource": "^1.5.1",
+    "jquery": "^2.2.2",
+    "ngstorage": "^0.3.10",
+  }
+}

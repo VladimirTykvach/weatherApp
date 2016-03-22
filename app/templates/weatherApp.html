@@ -1,0 +1,64 @@
+
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+        <div class="dropdown clearfix">
+            <button type="button" class="btn btn-default dropdown-toggle city-button" data-toggle="dropdown">
+                <span ng-if="(vm.cities.length > 0)">Select city</span>
+                <span ng-if="(vm.cities.length === 0)">Cities list is empty</span>
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu  city-list" role="menu">
+                <li ng-repeat="city in vm.cities">
+                    <span class="active-icon glyphicon glyphicon-trash" ng-click="vm.deleteCity($index)"></span>
+                    <span ng-if="!city.default" class="active-icon glyphicon glyphicon-ok" ng-click="vm.setDefault($index)"></span>
+                    <span ng-if="city.default"  class="not-active-icon glyphicon glyphicon-home"></span>
+                    <span class="city-item" ng-click="vm.selectCity($index)">{{city.name}}</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+        <form class="form-inline" role="form">
+
+              <span class="form-group form-group">
+                            <label for="location">City</label>
+                            <input ng-model="vm.location" type="text" class="form-control city-input" id="location"
+                                   placeholder="City" required>
+              </span>
+
+              <span class="form-group form-group-lg">
+                           <button class="btn btn-default search-btn" ng-click="vm.setLocation()">Search</button>
+              </span>
+
+        </form>
+    </div>
+</div>
+
+<div class="row error-box" ng-show="vm.appError.message">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="alert {{vm.appError.class}}" ng-bind="vm.appError.message"></div>
+    </div>
+</div>
+
+
+<div class="weather-wrapper" ng-show="vm.appError.showWeather">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 ng-bind="'Forecast for: ' + vm.forecast.city.name + '(' +  vm.forecast.city.country + ')'">)></h2>
+        </div>
+    </div>
+
+    <!--Today-->
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div today-panel="forecast" daily-data="vm.forecast.list[0]"></div>
+        </div>
+    </div>
+
+    <!--Other days-->
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3"
+             ng-repeat="forecastItem in vm.forecast.list.slice(1,forecast.list.length)">
+            <div weather-panel="forecast" daily-data="forecastItem"></div>
+        </div>
+    </div>
+</div>

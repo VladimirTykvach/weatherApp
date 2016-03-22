@@ -1,0 +1,25 @@
+<div class="weather panel panel-success">
+    <div class="panel-heading"><img ng-src="{{getIconImageUrl(dailyForecast.weather[0].icon)}}"/>
+        {{parseDate(dailyForecast.dt) | date:'EEE, MMM d'}}
+    </div>
+    <div class="panel-body">
+        <div>
+            <p class="lead">
+                {{dailyForecast.temp.min | number:0 }} .. {{dailyForecast.temp.max | number:0}}&#176;C
+                {{dailyForecast.weather[0].main | number:0}}
+            </p>
+            <p>
+                Day: {{dailyForecast.temp.day | number:0}}&#176;C
+            <hr>
+            Night: {{dailyForecast.temp.night | number:0}}&#176;C
+            </p>
+
+        </div>
+    </div>
+    <div class="panel-footer">
+        <small>
+            Pressure: {{dailyForecast.pressure | toMmHg | number:0}} mmHg&nbsp;&#126;&nbsp;
+            Humidity: {{dailyForecast.humidity | number:0}}%
+        </small>
+    </div>
+</div>

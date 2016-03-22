@@ -1,0 +1,43 @@
+<div class="weather panel panel-success">
+    <div class="panel-heading"><img ng-src="{{getIconImageUrl(dailyForecast.weather[0].icon)}}"/>
+        {{parseDate(dailyForecast.dt) | date:'EEE, MMM d'}}
+    </div>
+    <div class="panel-body">
+        <div>
+            <p class="lead text-center">
+                {{dailyForecast.temp.min | number:0 }} .. {{dailyForecast.temp.max | number:0}}&#176;C
+                {{dailyForecast.weather[0].main}} ({{dailyForecast.weather[0].description}})
+            </p>
+            <div class="row">
+
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    Min: {{dailyForecast.temp.min | number:0}}&#176;C
+                    <hr>
+                    Max: {{dailyForecast.temp.max | number:0}}&#176;C
+                    <hr>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    Morning: {{dailyForecast.temp.morn | number:0}}&#176;C
+                    <hr>
+                    Day: {{dailyForecast.temp.day | number:0}}&#176;C
+                    <hr>
+                </div>
+
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    Evening: {{dailyForecast.temp.eve | number:0}}&#176;C
+                    <hr>
+                    Night: {{dailyForecast.temp.night | number:0}}&#176;C
+                    <hr>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel-footer">
+        <small>
+            Pressure: {{dailyForecast.pressure | toMmHg | number:0}} mmHg&nbsp;,&nbsp;
+            Humidity: {{dailyForecast.humidity | number:0}}%
+        </small>
+    </div>
+</div>
