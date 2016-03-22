@@ -90,7 +90,6 @@
                             loadFromCache = isLoadFromCache(localStorageService.getItem('forecast_' + cityName).timestamp);
                         }
                         if (loadFromCache) {
-                            console.log('load from cache');
                             vm.forecast = localStorageService.getItem('forecast_' + cityName).data;
                             vm.appError = errorsService.reset();
                         } else {
