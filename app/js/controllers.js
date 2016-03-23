@@ -11,6 +11,7 @@
                     var vm = this;
                     
                     vm.appError = errorsService.reset();
+                    vm.forecast = [];
                     vm.location = '';
                     vm.position = undefined;
                     vm.cities = localStorageService.getItem('cities') || [];
@@ -96,10 +97,10 @@
                             openWeatherMapService.getForecast({
                                 city: cityName
                             }).then(function successCallback(data) {
-                                    vm.forecast = data;
                                     if (data.cod === "404" || data.city === undefined) {
                                         vm.appError = errorsService.set('notFound');
                                     } else {
+                                        vm.forecast = data;
                                         vm.appError = errorsService.reset();
                                         localStorageService.setItem(
                                             'forecast_' + cityName,
@@ -124,11 +125,11 @@
                             lat: position.lat,
                             lon: position.lon
                         }).then(function (data) {
-                            vm.forecast = data;
                             if (data.cod === "404") {
                                 vm.appError = errorsService.set('notFound');
                             }
-                            if (vm.forecast.city) {
+                            if (data.city) {
+                                vm.forecast = data;
                                 vm.appError = errorsService.reset();
                                 vm.cities = manageCitiesService.addItem(vm.forecast.city.name, vm.cities);
                                 localStorageService.setItem('cities', vm.cities);

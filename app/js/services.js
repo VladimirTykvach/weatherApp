@@ -37,7 +37,6 @@
                 }
 
                 function getForecastFailed(error) {
-                    console.log('Failed request getForecast.');
                     return error;
                 }
             }
@@ -165,11 +164,11 @@
 
         .factory('errorsService', function () {
             var errorsList = {
-                getAccess: 'Please give access to geolocation or input city input city  manually.',
+                getAccess: 'Please give access to geolocation or input city manually.',
                 notDetect: 'Browser can\'t detect your position. Please input city  manually.',
                 setDefault: 'Please set default city from list.',
                 emptyList: 'Cities list is empty. Please add city.',
-                notFound: 'Sorry. But weather/city  not found.'
+                notFound: 'Unfortunately forecast not found.'
             };
 
             return {
