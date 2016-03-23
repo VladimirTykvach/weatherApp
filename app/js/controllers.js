@@ -9,7 +9,7 @@
                 function ($scope, $window, openWeatherMapService, geolocationService, localStorageService, manageCitiesService, errorsService, APP_CONFIG) {
 
                     var vm = this;
-                    
+
                     vm.appError = errorsService.reset();
                     vm.forecast = [];
                     vm.location = '';
@@ -97,22 +97,7 @@
                             openWeatherMapService.getForecast({
                                 city: cityName
                             }).then(function successCallback(data) {
-                                    if (data.cod === "404" || data.city === undefined) {
-                                        vm.appError = errorsService.set('notFound');
-                                    } else {
-                                        vm.forecast = data;
-                                        vm.appError = errorsService.reset();
-                                        localStorageService.setItem(
-                                            'forecast_' + cityName,
-                                            {
-                                                timestamp: new Date().getTime(),
-                                                city: cityName,
-                                                data: vm.forecast
-                                            }
-                                        );
-                                        vm.cities = manageCitiesService.addItem(cityName, vm.cities);
-                                        localStorageService.setItem('cities', vm.cities);
-                                    }
+                                    updateForecast(data, cityName);
                                 },
                                 function errorCallback(response) {
                                     vm.appError = errorsService.set('notFound');
@@ -125,23 +110,37 @@
                             lat: position.lat,
                             lon: position.lon
                         }).then(function (data) {
-                            if (data.cod === "404") {
+                                updateForecast(data);
+                            },
+                            function errorCallback(response) {
                                 vm.appError = errorsService.set('notFound');
+                            });
+                    }
+
+                    function updateForecast(data, name) {
+                        var cityName = '';
+                        if (arguments[1]) {
+                            cityName = name;
+                        }
+                        if (data.cod === "404" || data.city === undefined) {
+                            vm.appError = errorsService.set('notFound');
+                        } else {
+                            vm.forecast = data;
+                            vm.appError = errorsService.reset();
+                            if (cityName === '') {
+                                cityName = vm.forecast.city.name;
                             }
-                            if (data.city) {
-                                vm.forecast = data;
-                                vm.appError = errorsService.reset();
-                                vm.cities = manageCitiesService.addItem(vm.forecast.city.name, vm.cities);
-                                localStorageService.setItem('cities', vm.cities);
-                                localStorageService.setItem('forecast_' + vm.forecast.city.name,
-                                    {
-                                        timestamp: new Date().getTime(),
-                                        city: vm.forecast.city,
-                                        data: vm.forecast
-                                    }
-                                );
-                            }
-                        });
+                            localStorageService.setItem(
+                                'forecast_' + cityName,
+                                {
+                                    timestamp: new Date().getTime(),
+                                    city: cityName,
+                                    data: vm.forecast
+                                }
+                            );
+                            vm.cities = manageCitiesService.addItem(cityName, vm.cities);
+                            localStorageService.setItem('cities', vm.cities);
+                        }
                     }
 
                     function isLoadFromCache(timestamp) {
